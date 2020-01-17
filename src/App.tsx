@@ -6,7 +6,7 @@ import Login from './pages/system/auth/Login'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className="app">
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/" component={LayoutHome} />
