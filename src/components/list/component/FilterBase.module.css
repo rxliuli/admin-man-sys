@@ -1,0 +1,10 @@
+.baseFilter {
+  align-items: center;
+}
+.label {
+  min-width: 6em;
+}
+.content {
+  display: flex;
+  align-items: center;
+}

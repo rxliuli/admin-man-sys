@@ -17,7 +17,7 @@ class LayoutSideMenuStore {
     new SideMenuFolder(
       '用户相关',
       [
-        new SideMenuItem('用户列表', '/user/user/list'),
+        new SideMenuItem('用户列表', '/user/list'),
         new SideMenuItem('用户权限', '/user/role/list'),
       ],
       'user',
