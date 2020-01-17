@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
-import './LayoutHome.css'
 import LayoutSideMenu from './LayoutSideMenu'
 import { observer } from 'mobx-react'
 import RouteList from './RouteList'
 import LayoutHeader from './LayoutHeader'
 import LayoutFooter from './LayoutFooter'
+import styles from './LayoutHome.module.css'
 
 @observer
 class LayoutHome extends Component {
   render() {
     return (
-      <Layout className="layout-home">
+      <Layout className={styles.layoutHome}>
         <LayoutSideMenu />
         <Layout>
           <LayoutHeader />

@@ -4,6 +4,7 @@ import { layoutSideMenuStore } from './LayoutSideMenu.store'
 import { MenuType, SideMenuFolder, SideMenuItem } from './SideMenuEntity'
 import { observer } from 'mobx-react'
 import { RouteComponentProps, withRouter } from 'react-router'
+import styles from './LayoutSideMenu.module.css'
 
 type StateType = { collapsed: boolean }
 type PropsType = {} & RouteComponentProps
@@ -43,8 +44,9 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
         }
       >
         {sideMenu.type === MenuType.Folder
-          ? (sideMenu as SideMenuFolder).children.map(this
-              .recursiveRenderSideMenu as any)
+          ? (sideMenu as SideMenuFolder).children.map(
+              this.recursiveRenderSideMenu as any,
+            )
           : null}
       </Menu.SubMenu>
     )
@@ -61,15 +63,16 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
         collapsed={this.state.collapsed}
         onCollapse={this.toggle}
       >
-        <div className="logo" />
+        <div className={styles.logo} />
         <Menu
           theme="dark"
           mode="inline"
           selectedKeys={layoutSideMenuStore.selectedKeys}
           onSelect={layoutSideMenuStore.changeSelectedKeys}
         >
-          {layoutSideMenuStore.sideMenuList.map(this
-            .recursiveRenderSideMenu as any)}
+          {layoutSideMenuStore.sideMenuList.map(
+            this.recursiveRenderSideMenu as any,
+          )}
         </Menu>
       </Layout.Sider>
     )

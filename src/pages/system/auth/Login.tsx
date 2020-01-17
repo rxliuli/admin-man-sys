@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Checkbox, Form, Icon, Input } from 'antd'
 import { FormComponentProps } from 'antd/es/form'
-import './Login.css'
+import styles from './Login.module.css'
 import { RouteComponentProps, withRouter } from 'react-router'
 
 interface PropTypes extends FormComponentProps, RouteComponentProps {
@@ -27,8 +27,8 @@ class Login extends React.Component<PropTypes> {
   render() {
     const { getFieldDecorator } = this.props.form
     return (
-      <div className="login-box">
-        <Card title="登录" bordered={false} className="login">
+      <div className={styles.loginBox}>
+        <Card title="登录" bordered={false} className={styles.login}>
           <Form onSubmit={this.handleSubmit}>
             <Form.Item>
               {getFieldDecorator('username', {
