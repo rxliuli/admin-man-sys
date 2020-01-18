@@ -1,35 +1,37 @@
-import React, { Component } from 'react'
-import { Avatar, Badge, Dropdown, Icon, Layout, Menu } from 'antd'
+import React, {Component} from 'react'
+import {Avatar, Dropdown, Icon, Layout, Menu} from 'antd'
 import styles from './LayoutHeader.module.css'
+import SystemMessage from './SystemMessage'
 
-const { Header } = Layout
+const {Header} = Layout
+
 
 class LayoutHeader extends Component {
   render() {
     return (
       <Header
         className={styles.layoutHeader}
-        style={{ backgroundColor: '#fff' }}
+        style={{backgroundColor: '#fff'}}
       >
-        <Badge count={5}>
-          <Icon type="bell" style={{ fontSize: 24 }} />
-        </Badge>
+        <SystemMessage/>
         <Dropdown
           overlay={
             <Menu>
               <Menu.Item key={0}>
-                <Icon type="info-circle" />
+                <Icon type="info-circle"/>
                 个人信息
               </Menu.Item>
               <Menu.Item key={1}>
-                <Icon type="logout" />
+                <Icon type="logout"/>
                 退出
               </Menu.Item>
             </Menu>
           }
         >
-          <Avatar icon="user" style={{ marginLeft: 8 }} />
+          <Avatar icon="user" style={{marginLeft: 8}}/>
         </Dropdown>
+
+
       </Header>
     )
   }
