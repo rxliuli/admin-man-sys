@@ -73,12 +73,7 @@ class BasicList extends Component<PropsType, StateType> {
     const { keyword } = innerParams
     return (
       <div>
-        <ListHeader
-          title={header.title}
-          list={header.list}
-          value={keyword}
-          onSearch={this.changeKeyword}
-        />
+        <ListHeader {...header} value={keyword} onSearch={this.changeKeyword} />
         {filters && filters.length > 0 ? (
           <ListFilter
             filters={filters}

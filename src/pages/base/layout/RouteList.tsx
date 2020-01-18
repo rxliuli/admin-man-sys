@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Switch } from 'react-router'
-import HelloWorld from '../../index/HelloWorld'
-import UserList from '../../index/UserList'
+import RouteLoading from './RouteLoading'
 
 function RouteList() {
   return (
     <div>
-      <Switch>
-        <Route path={'/system/task'} component={HelloWorld} />
-        <Route path={'/user/list'} component={UserList} />
-      </Switch>
+      <Suspense fallback={<RouteLoading />}>
+        <Switch>
+          <Route
+            path={'/system/task'}
+            component={lazy(() => import('../../index/HelloWorld'))}
+          />
+          <Route
+            path={'/user/list'}
+            component={lazy(() => import('../../index/UserList'))}
+          />
+        </Switch>
+      </Suspense>
     </div>
   )
 }
