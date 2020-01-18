@@ -67,8 +67,6 @@ class Login extends React.Component<PropTypes> {
   }
 }
 
-export default withRouter(
-  Form.create<PropTypes>({
-    name: 'login',
-  })(Login) as any,
-)
+export default withRouter(Form.create<PropTypes>({
+  name: 'login',
+})(Login) as any)

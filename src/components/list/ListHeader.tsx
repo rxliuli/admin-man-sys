@@ -1,5 +1,6 @@
 import React from 'react'
 import { Breadcrumb, Card, Col, Input, Row } from 'antd'
+import { HeaderNavItem } from './ts/HeaderNavItem'
 
 const { Search } = Input
 
@@ -9,7 +10,7 @@ type ReactInput = React.DetailedHTMLProps<
 >
 type PropsType = {
   value?: string
-  list: string[]
+  list: (string | HeaderNavItem)[]
   title: string
   onSearch: (keyword?: string) => void
 } & Omit<ReactInput, 'list'>

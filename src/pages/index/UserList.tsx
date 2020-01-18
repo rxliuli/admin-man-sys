@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import ListHeader from '../../components/list/ListHeader'
-import { observer } from 'mobx-react'
 import produce from 'immer'
-import ListTable from '../../components/list/ListTable'
-import classNames from 'classnames'
-import globalStyles from '../../assets/css/global.module.css'
-import { Card } from 'antd'
-import FilterSelect from '../../components/list/component/FilterSelect'
 import { filterSelectConstant } from './FilterSelect.constant'
-import FilterSplitLine from '../../components/list/component/FilterSplitLine'
-import FilterTimeRange from '../../components/list/component/FilterTimeRange'
 import { Moment } from 'moment'
+import ListFilter from '../../components/list/ListFilter'
+import {
+  FilterFieldSelect,
+  FilterFieldTimeRange,
+} from '../../components/list/ts/FilterField'
+import ListTable from '../../components/list/ListTable'
+import { TableColumn } from '../../components/list/ts/TableColumn'
+import { userApi } from './ts/user.api'
+import BasicList from '../../components/list/BasicList'
 
 type StateType = {
   header: {
@@ -26,7 +27,6 @@ type StateType = {
   }
 }
 
-@observer
 class UserList extends Component<{}, StateType> {
   state = {
     header: {
@@ -34,72 +34,45 @@ class UserList extends Component<{}, StateType> {
       placeholder: '用户名/住址',
       list: ['用户', '列表'],
     },
+    filters: [
+      new FilterFieldSelect({
+        title: '年龄',
+        field: 'age',
+        values: filterSelectConstant.age,
+      }),
+      new FilterFieldTimeRange({
+        title: '生日',
+        fields: ['birthdayTimeBegin', 'birthdayTimeEnd'],
+      }),
+    ],
     params: {
       keyword: undefined,
       age: undefined,
       birthdayTimeBegin: undefined,
       birthdayTimeEnd: undefined,
     },
-  }
-  changeKeyword = (val?: string) => {
-    this.setState(
-      produce(this.state, (draft: StateType) => {
-        draft.params.keyword = val
+    columns: [
+      new TableColumn({ field: 'id', title: 'ID' }),
+      new TableColumn({ field: 'name', title: '姓名' }),
+      new TableColumn({ field: 'birthday', title: '生日' }),
+      new TableColumn({
+        field: 'operate',
+        title: '操作',
+        //TODO 此处暂时只能用 any
+        slot: ((param: any) => <span>详情 {param.record.id}</span>) as any,
       }),
-    )
-  }
-  changeAge = (val: number) => {
-    this.setState(
-      produce(this.state, (draft: StateType) => {
-        draft.params.age = val
-      }),
-    )
-  }
-  changeBirthdayTime = ([begin, end]: [
-    Moment | undefined,
-    Moment | undefined,
-  ]) => {
-    this.setState(
-      produce(this.state, (draft: StateType) => {
-        draft.params.birthdayTimeBegin = begin
-        draft.params.birthdayTimeEnd = end
-      }),
-    )
+    ],
+    api: userApi,
   }
   render() {
-    const {
-      birthdayTimeBegin,
-      birthdayTimeEnd,
-      keyword,
-      age,
-    } = this.state.params
+    const { header, filters, columns, api } = this.state
     return (
-      <div>
-        <ListHeader
-          value={keyword}
-          list={this.state.header.list}
-          title={this.state.header.title}
-          placeholder={this.state.header.placeholder}
-          onSearch={this.changeKeyword}
-        />
-        <div className={classNames(globalStyles.global, globalStyles.margin)}>
-          <Card>
-            <FilterSelect
-              title={'年龄'}
-              values={filterSelectConstant.age}
-              value={age!}
-              onChange={this.changeAge}
-            />
-            <FilterSplitLine />
-            <FilterTimeRange
-              title={'生日'}
-              value={[birthdayTimeBegin, birthdayTimeEnd]}
-              onChange={this.changeBirthdayTime}
-            />
-          </Card>
-        </div>
-        <ListTable />
-      </div>
+      <BasicList
+        header={header}
+        filters={filters}
+        columns={columns}
+        api={api}
+      />
     )
   }
 }
