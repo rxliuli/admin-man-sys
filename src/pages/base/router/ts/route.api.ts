@@ -2,7 +2,7 @@ import { OperatePermission, RoutePermission } from './Permission'
 import { autoIncrement } from 'rx-util'
 
 class RouteApi {
-  list(): (RoutePermission | OperatePermission)[] {
+  async list(): Promise<(RoutePermission | OperatePermission)[]> {
     return [
       new RoutePermission({
         id: autoIncrement(),

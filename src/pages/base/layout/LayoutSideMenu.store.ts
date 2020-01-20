@@ -4,7 +4,7 @@ import {
   MenuType,
   SideMenuFolder,
   SideMenuItem,
-} from './ts/SideMenu'
+} from '../router/ts/SideMenu'
 
 class LayoutSideMenuStore {
   //当前展开的菜单

@@ -1,6 +1,8 @@
 /**
  * 侧边栏菜单类型枚举
  */
+import { autoIncrement } from 'rx-util'
+
 export enum MenuType {
   Folder,
   Item,
@@ -10,6 +12,7 @@ export enum MenuType {
  * 侧边菜单元素基类
  */
 export abstract class BaseSideMenu<T extends MenuType> {
+  key = autoIncrement()
   protected constructor(public type: T, public title: string) {}
 }
 

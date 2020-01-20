@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, Layout, Menu } from 'antd'
 import { layoutSideMenuStore } from './LayoutSideMenu.store'
-import { MenuType, SideMenuFolder, SideMenuItem } from './ts/SideMenu'
+import { MenuType, SideMenuFolder, SideMenuItem } from '../router/ts/SideMenu'
 import { observer } from 'mobx-react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import styles from './LayoutSideMenu.module.css'
@@ -20,14 +20,11 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
    * @param sideMenu
    * @param key
    */
-  recursiveRenderSideMenu = (
-    sideMenu: SideMenuFolder | SideMenuItem,
-    key: number,
-  ) => {
+  recursiveRenderSideMenu = (sideMenu: SideMenuFolder | SideMenuItem) => {
     if (sideMenu.type === MenuType.Item) {
       return (
         <Menu.Item
-          key={key}
+          key={sideMenu.key}
           onClick={() => this.props.history.push(sideMenu.path)}
         >
           <span>{sideMenu.title}</span>
@@ -36,7 +33,7 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
     }
     return (
       <Menu.SubMenu
-        key={key}
+        key={sideMenu.key}
         title={
           <span>
             {sideMenu.icon && <Icon type={sideMenu.icon} />}

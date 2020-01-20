@@ -1,5 +1,5 @@
 import React from 'react'
-import RouteLoading from '../base/layout/RouteLoading'
+import RouteLoading from '../base/router/RouteLoading'
 
 function HelloWorld() {
   return (

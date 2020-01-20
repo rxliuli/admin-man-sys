@@ -1,9 +1,8 @@
 import React, { Component, ReactNode } from 'react'
 import globalStyles from '../../assets/css/global.module.css'
 import classNames from 'classnames'
-import { Card } from 'antd'
+import { Card, Divider } from 'antd'
 import FilterSelect from './component/FilterSelect'
-import FilterSplitLine from './component/FilterSplitLine'
 import FilterTimeRange from './component/FilterTimeRange'
 import {
   FilterFieldBase,
@@ -106,7 +105,7 @@ class ListFilter extends Component<PropsType, StateType> {
               <div key={i}>
                 {filterItem}
                 {i !== this.props.filters.length - 1 ? (
-                  <FilterSplitLine />
+                  <Divider dashed />
                 ) : null}
               </div>
             )
