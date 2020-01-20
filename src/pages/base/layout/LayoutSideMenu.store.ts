@@ -1,11 +1,16 @@
 import { action, observable } from 'mobx'
-import { BaseSideMenu, SideMenuFolder, SideMenuItem } from './SideMenuEntity'
+import {
+  BaseSideMenu,
+  MenuType,
+  SideMenuFolder,
+  SideMenuItem,
+} from './ts/SideMenu'
 
 class LayoutSideMenuStore {
   //当前展开的菜单
   @observable selectedKeys: string[] = []
   //侧边栏菜单列表
-  @observable sideMenuList: BaseSideMenu[] = [
+  @observable sideMenuList = [
     new SideMenuFolder(
       '系统配置',
       [

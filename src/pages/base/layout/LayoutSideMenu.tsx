@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, Layout, Menu } from 'antd'
 import { layoutSideMenuStore } from './LayoutSideMenu.store'
-import { MenuType, SideMenuFolder, SideMenuItem } from './SideMenuEntity'
+import { MenuType, SideMenuFolder, SideMenuItem } from './ts/SideMenu'
 import { observer } from 'mobx-react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import styles from './LayoutSideMenu.module.css'
@@ -18,24 +18,25 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
   /**
    * 递归渲染菜单组件
    * @param sideMenu
+   * @param key
    */
-  recursiveRenderSideMenu = (sideMenu: SideMenuFolder | SideMenuItem) => {
+  recursiveRenderSideMenu = (
+    sideMenu: SideMenuFolder | SideMenuItem,
+    key: number,
+  ) => {
     if (sideMenu.type === MenuType.Item) {
       return (
         <Menu.Item
-          key={sideMenu.key}
-          onClick={() =>
-            this.props.history.push((sideMenu as SideMenuItem).path)
-          }
+          key={key}
+          onClick={() => this.props.history.push(sideMenu.path)}
         >
-          {sideMenu.icon && <Icon type={sideMenu.icon} />}
           <span>{sideMenu.title}</span>
         </Menu.Item>
       )
     }
     return (
       <Menu.SubMenu
-        key={sideMenu.key}
+        key={key}
         title={
           <span>
             {sideMenu.icon && <Icon type={sideMenu.icon} />}
@@ -44,9 +45,7 @@ class LayoutSideMenu extends React.Component<PropsType, StateType> {
         }
       >
         {sideMenu.type === MenuType.Folder
-          ? (sideMenu as SideMenuFolder).children.map(
-              this.recursiveRenderSideMenu as any,
-            )
+          ? sideMenu.children.map(this.recursiveRenderSideMenu as any)
           : null}
       </Menu.SubMenu>
     )
