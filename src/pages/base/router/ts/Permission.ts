@@ -39,5 +39,6 @@ export class OperatePermission extends BasePermission<PermissionType.Operate> {
   constructor(params: Omit<OperatePermission, 'type'>) {
     super(PermissionType.Operate, params.id, params.name, params.description)
     this.key = params.key
+    this.path = params.path
   }
 }

@@ -1,30 +1,20 @@
-import React, { Component, lazy } from 'react'
+import React, { Component } from 'react'
 import { RouteProps } from 'react-router'
 import RenderRouteList from './RenderRouteList'
-import { routeApi } from './ts/route.api'
-import { PermissionType, RoutePermission } from './ts/Permission'
+import { routeApi } from './ts/permission.api'
+import { PermissionType } from './ts/Permission'
 import NoMatch from './NoMatch'
+import { StringValidator } from 'rx-util'
+import { observer } from 'mobx-react'
+import { allRouteList } from './ts/allRouteList'
+import { layoutSideMenuStore } from '../layout/LayoutSideMenu.store'
 
 type PropsType = {}
 type StateType = {
   routes: RouteProps[]
 }
 
-const allRouteList = [
-  {
-    path: '/system/task/list',
-    component: lazy(() => import('../../index/HelloWorld')),
-  },
-  {
-    path: '/system/user/list',
-    component: lazy(() => import('../../system/user/UserList')),
-  },
-  {
-    path: '/system/user/:id',
-    component: lazy(() => import('../../system/user/UserDetail')),
-  },
-]
-
+@observer
 class RouteList extends Component<PropsType, StateType> {
   state = {
     routes: [] as RouteProps[],
@@ -35,11 +25,14 @@ class RouteList extends Component<PropsType, StateType> {
   }
 
   initRoutes = async () => {
-    const list = await routeApi.list()
     const pathSet = new Set(
-      list
-        .filter(permission => permission.type === PermissionType.Route)
-        .map(permission => (permission as RoutePermission).path),
+      layoutSideMenuStore.permissionList
+        .filter(
+          permission =>
+            permission.type === PermissionType.Route ||
+            !StringValidator.isEmpty(permission.path),
+        )
+        .map(permission => permission.path!),
     )
     this.setState({
       routes: allRouteList.filter(route => pathSet.has(route.path)),
