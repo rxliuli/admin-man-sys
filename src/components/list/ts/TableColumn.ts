@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 /**
  * 表格的列
  */
@@ -17,7 +19,7 @@ export class TableColumn {
   /**
    * @field 是否使用 slot，如果是，则值为 true
    */
-  slot?: (param: { text: string; record: any; i: number }) => Element
+  slot?: (param: { text: string; record: any; i: number }) => ReactNode
 
   constructor({ field, title, formatter, slot }: TableColumn) {
     this.field = field

@@ -32,6 +32,10 @@ export class RoutePermission extends BasePermission<PermissionType.Route> {
  */
 export class OperatePermission extends BasePermission<PermissionType.Operate> {
   key: string
+  /**
+   * 如果按钮关联到路由有值
+   */
+  path?: string
   constructor(params: Omit<OperatePermission, 'type'>) {
     super(PermissionType.Operate, params.id, params.name, params.description)
     this.key = params.key

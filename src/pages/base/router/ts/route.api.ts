@@ -14,10 +14,10 @@ class RouteApi {
         name: '用户列表',
         path: '/system/user/list',
       }),
-      new OperatePermission({
+      new RoutePermission({
         id: autoIncrement(),
         name: '详情',
-        key: '/system/user/:id',
+        path: '/system/user/:id',
       }),
     ]
   }

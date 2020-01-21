@@ -1,4 +1,4 @@
-import { HeaderNavItem } from './HeaderNavItem'
+import { HeaderNavItem } from '../../header/ts/HeaderNavItem'
 
 export interface Header {
   /**

@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
-import ListHeader from '../../../components/list/ListHeader'
-import produce from 'immer'
 import { filterSelectConstant } from '../../index/FilterSelect.constant'
 import { Moment } from 'moment'
-import ListFilter from '../../../components/list/ListFilter'
 import {
   FilterFieldSelect,
   FilterFieldTimeRange,
 } from '../../../components/list/ts/FilterField'
-import ListTable from '../../../components/list/ListTable'
 import { TableColumn } from '../../../components/list/ts/TableColumn'
 import { userApi } from '../../index/ts/user.api'
 import BasicList from '../../../components/list/BasicList'
+import { Link } from 'react-router-dom'
 
 type StateType = {
   header: {
@@ -58,8 +55,9 @@ class UserList extends Component<{}, StateType> {
       new TableColumn({
         field: 'operate',
         title: '操作',
-        //TODO 此处暂时只能用 any
-        slot: ((param: any) => <span>详情 {param.record.id}</span>) as any,
+        slot: (param: any) => (
+          <Link to={`/system/user/${param.record.id}`}>详情</Link>
+        ),
       }),
     ],
     api: userApi,

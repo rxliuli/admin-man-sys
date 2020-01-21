@@ -1,6 +1,7 @@
 import React from 'react'
 import { Breadcrumb, Card, Col, Input, Row } from 'antd'
-import { HeaderNavItem } from './ts/HeaderNavItem'
+import { HeaderNavItem } from '../header/ts/HeaderNavItem'
+import CommonHeader from '../header/CommonHeader'
 
 const { Search } = Input
 
@@ -12,8 +13,9 @@ type PropsType = {
   value?: string
   list: (string | HeaderNavItem)[]
   title: string
+  placeholder: string
   onSearch: (keyword?: string) => void
-} & Omit<ReactInput, 'list'>
+}
 type StateType = {
   innerValue?: string
 }
@@ -43,29 +45,17 @@ class ListHeader extends React.Component<PropsType, StateType> {
   }
 
   render() {
-    const { list, title, onSearch } = this.props
+    const { list, title, placeholder, onSearch } = this.props
     return (
-      <Card>
-        <Row style={{ background: '#fff' }}>
-          <Col span={12}>
-            <h2>{title}</h2>
-            <Breadcrumb>
-              {list.map((item, i) => (
-                <Breadcrumb.Item key={i}>{item}</Breadcrumb.Item>
-              ))}
-            </Breadcrumb>
-          </Col>
-          <Col span={6} offset={6}>
-            <Search
-              {...(this.props as any)}
-              value={this.state.innerValue}
-              onChange={this.onChange}
-              onSearch={onSearch}
-              enterButton
-            />
-          </Col>
-        </Row>
-      </Card>
+      <CommonHeader list={list} title={title}>
+        <Search
+          value={this.state.innerValue}
+          placeholder={placeholder}
+          onChange={this.onChange}
+          onSearch={onSearch}
+          enterButton
+        />
+      </CommonHeader>
     )
   }
 }

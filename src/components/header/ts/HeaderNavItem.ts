@@ -6,9 +6,8 @@
  * @field isRoute 默认会赋值
  */
 export class HeaderNavItem {
-  constructor(
-    public name: string,
-    public link?: string,
-    public isRoute = true,
-  ) {}
+  isRoute: boolean
+  constructor(public name: string, public link?: string) {
+    this.isRoute = !!link
+  }
 }
