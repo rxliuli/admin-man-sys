@@ -1,12 +1,19 @@
 import React from 'react'
-import RouteLoading from '../base/router/RouteLoading'
+import withOrderComponent, {
+  withOrderComponentPropsType,
+} from './withOrderComponent'
+import NotWithOrderComponent from './NotWithOrderComponent'
 
-function HelloWorld() {
+function HelloWorld(props: withOrderComponentPropsType) {
+  return <div className="hello-world">{props.hello}</div>
+}
+
+function HelloWorld3() {
   return (
-    <div className="hello-world">
-      <RouteLoading />
-    </div>
+    <NotWithOrderComponent>
+      {props => <div className="hello-world">{props.hello}</div>}
+    </NotWithOrderComponent>
   )
 }
 
-export default HelloWorld
+export default withOrderComponent(HelloWorld)

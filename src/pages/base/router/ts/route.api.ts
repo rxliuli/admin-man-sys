@@ -7,17 +7,17 @@ class RouteApi {
       new RoutePermission({
         id: autoIncrement(),
         name: '系统任务',
-        path: '/system/task',
+        path: '/system/task/list',
       }),
       new RoutePermission({
         id: autoIncrement(),
         name: '用户列表',
-        path: '/user/list',
+        path: '/system/user/list',
       }),
       new OperatePermission({
         id: autoIncrement(),
         name: '详情',
-        key: 'user:list:btn:detail',
+        key: '/system/user/:id',
       }),
     ]
   }

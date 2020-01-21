@@ -12,16 +12,16 @@ type StateType = {
 
 const allRouteList = [
   {
-    path: '/system/task',
+    path: '/system/task/list',
     component: lazy(() => import('../../index/HelloWorld')),
   },
   {
-    path: '/user/list',
-    component: lazy(() => import('../../index/UserList')),
+    path: '/system/user/list',
+    component: lazy(() => import('../../system/user/UserList')),
   },
   {
-    path: '/hello/world',
-    component: lazy(() => import('../../index/HelloWorld')),
+    path: '/system/user/:id',
+    component: lazy(() => import('../../system/user/UserDetail')),
   },
 ]
 

@@ -18,7 +18,7 @@ export abstract class BasePermission<T extends PermissionType> {
   ) {}
 }
 /**
- * 操作级权限
+ * 路由级权限
  */
 export class RoutePermission extends BasePermission<PermissionType.Route> {
   path: string
