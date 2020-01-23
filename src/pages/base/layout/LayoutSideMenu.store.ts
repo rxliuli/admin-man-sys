@@ -4,27 +4,32 @@ import {
   PermissionType,
   RoutePermission,
 } from '../router/ts/Permission'
-import {
-  listToTree,
-  logger,
-  NodeBridgeUtil,
-  StringValidator,
-  treeToList,
-} from 'rx-util'
+import { StringValidator } from 'rx-util'
 import { allSideMenuList } from './allSideMenuList'
-import { BaseSideMenu, SideMenuFolder } from '../router/ts/SideMenu'
 import { routeApi } from '../router/ts/permission.api'
+import { bridge, INode, treeFilter } from './ts/treeFilter'
+import { MenuType, SideMenuItem } from '../router/ts/SideMenu'
 
 class LayoutSideMenuStore {
+  //region 菜单
+
   //当前展开的菜单
   @observable selectedKeys: string[] = []
-  @observable permissionList: (RoutePermission | OperatePermission)[] = []
 
   @action
   changeSelectedKeys = (changeParam: any) => {
     this.selectedKeys = changeParam.selectedKeys
   }
 
+  //endregion
+
+  //region 权限
+
+  @observable permissionList: (RoutePermission | OperatePermission)[] = []
+
+  /**
+   * 刷新权限列表
+   */
   @action
   async refreshPermissionList() {
     this.permissionList = await routeApi.list()
@@ -56,14 +61,22 @@ class LayoutSideMenuStore {
    */
   @computed
   get sideMenuList(): typeof allSideMenuList {
-    const list = treeToList(allSideMenuList, {
-      bridge: NodeBridgeUtil.bridge({
-        child: 'children',
-      }),
-    }).filter(sideMenu => this.routePermissionSet.has(sideMenu.path!))
-    logger.info('list: ', list)
-    return list.length === 0 ? [] : (listToTree(list) as any)
+    return allSideMenuList.map(sideMenu =>
+      treeFilter(
+        sideMenu,
+        node =>
+          node.type === MenuType.Folder ||
+          this.routePermissionSet.has(
+            ((node as any) as INode<SideMenuItem>).path,
+          ),
+        bridge({
+          child: 'children',
+        }),
+      ),
+    ) as any
   }
+
+  //endregion
 }
 
 export const layoutSideMenuStore = new LayoutSideMenuStore()

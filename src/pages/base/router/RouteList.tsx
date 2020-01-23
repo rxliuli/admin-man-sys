@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { RouteProps } from 'react-router'
 import RenderRouteList from './RenderRouteList'
-import { routeApi } from './ts/permission.api'
 import { PermissionType } from './ts/Permission'
 import NoMatch from './NoMatch'
 import { StringValidator } from 'rx-util'
@@ -21,10 +20,12 @@ class RouteList extends Component<PropsType, StateType> {
   }
 
   componentDidMount(): void {
+    // noinspection JSIgnoredPromiseFromCall
     this.initRoutes()
   }
 
   initRoutes = async () => {
+    await layoutSideMenuStore.refreshPermissionList()
     const pathSet = new Set(
       layoutSideMenuStore.permissionList
         .filter(

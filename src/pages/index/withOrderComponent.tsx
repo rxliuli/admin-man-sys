@@ -9,9 +9,6 @@ function withOrderComponent(
     state = {
       hello: 'hello world',
     }
-    constructor(props: any) {
-      super(props)
-    }
 
     render() {
       return (

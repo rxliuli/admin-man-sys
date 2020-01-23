@@ -10,5 +10,9 @@ export const allSideMenuList = [
     ],
     'setting',
   ),
-  new SideMenuFolder('其他', [], 'user'),
+  new SideMenuFolder(
+    '其他',
+    [new SideMenuFolder('关于该项目', [], 'about')],
+    'user',
+  ),
 ]
