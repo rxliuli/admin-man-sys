@@ -1,7 +1,7 @@
 import React from 'react'
 import CommonHeader from '../../../components/header/CommonHeader'
 import { HeaderNavItem } from '../../../components/header/ts/HeaderNavItem'
-import { Card, Col, Row } from 'antd'
+import { Card } from 'antd'
 import { UserEntity } from '../../index/ts/user.entity'
 import { userApi } from '../../index/ts/user.api'
 import { RouteComponentProps, withRouter } from 'react-router'

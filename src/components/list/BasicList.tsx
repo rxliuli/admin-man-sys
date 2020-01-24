@@ -15,7 +15,6 @@ type PropsType = {
   filters: FilterFieldBase[]
   columns: TableColumn[]
   api: BaseListApi
-  options?: TableOptions
   params?: Params
   onChange?: (params: Params) => void
   tableOptions?: TableOptions
