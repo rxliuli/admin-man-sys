@@ -1,24 +1,25 @@
 import React from 'react'
 import CommonHeader from '../../../components/header/CommonHeader'
 import { HeaderNavItem } from '../../../components/header/ts/HeaderNavItem'
-import { Card } from 'antd'
+import { Card, Col, Row } from 'antd'
 import { UserEntity } from '../../index/ts/user.entity'
 import { userApi } from '../../index/ts/user.api'
 import { RouteComponentProps, withRouter } from 'react-router'
 import globalStyles from '../../../assets/css/global.module.css'
 import classNames from 'classnames'
+import DetailItemSimpleText from '../../../components/detail/DetailItemSimpleText'
 
 type PropsType = RouteComponentProps<{ id: string }>
 type StateType = {
   detail: UserEntity
 }
 
-class UserDetail extends React.Component<PropsType> {
+class UserDetail extends React.Component<PropsType, StateType> {
   state = {
     detail: {} as UserEntity,
   }
-  componentDidMount(): void {
-    this.initData()
+  async componentDidMount() {
+    await this.initData()
   }
   async initData() {
     this.setState({
@@ -27,6 +28,7 @@ class UserDetail extends React.Component<PropsType> {
   }
 
   render() {
+    const { id, name, birthday } = this.state.detail
     return (
       <div>
         <CommonHeader
@@ -38,7 +40,9 @@ class UserDetail extends React.Component<PropsType> {
           title="用户详情"
         />
         <Card className={classNames(globalStyles.global, globalStyles.margin)}>
-          {JSON.stringify(this.state.detail, null, 2)}
+          <DetailItemSimpleText label="ID" text={id} />
+          <DetailItemSimpleText label="姓名" text={name} />
+          <DetailItemSimpleText label="生日" text={birthday} />
         </Card>
       </div>
     )

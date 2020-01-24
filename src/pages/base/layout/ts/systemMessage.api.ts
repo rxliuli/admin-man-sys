@@ -1,5 +1,5 @@
 import { Page } from '../../../../components/list/ts/Page'
-import { mock, Random } from 'mockjs'
+import { mock } from 'mockjs'
 import { SystemMessage } from './SystemMessage'
 import { wait } from 'rx-util'
 
