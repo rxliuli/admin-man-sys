@@ -46,7 +46,7 @@ class RouteList extends Component<PropsType, StateType> {
         <RenderRouteList
           routes={this.state.routes}
           noMatch={<NoMatch />}
-          home="/user/list"
+          home="/system/user/list"
         />
       </div>
     )
