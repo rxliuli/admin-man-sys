@@ -21,6 +21,18 @@ class UserDetail extends React.Component<PropsType, StateType> {
   async componentDidMount() {
     await this.initData()
   }
+
+  async componentDidUpdate(
+    nextProps: Readonly<PropsType>,
+    nextState: Readonly<StateType>,
+    nextContext: any,
+  ) {
+    //路由变化了
+    if (this.props.match.params.id !== nextProps.match.params.id) {
+      await this.initData()
+    }
+  }
+
   async initData() {
     this.setState({
       detail: await userApi.get(parseInt(this.props.match.params.id)),
