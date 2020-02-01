@@ -16,9 +16,15 @@ class PermissionApi {
       }),
       new OperatePermission({
         id: autoIncrement(),
-        name: '详情',
+        name: '用户详情',
         key: 'system:user:detail:disable',
         path: '/system/user/:id',
+      }),
+      new OperatePermission({
+        id: autoIncrement(),
+        name: '用户修改',
+        key: 'system:user:edit:disable',
+        path: '/system/user/:id/edit',
       }),
     ]
   }

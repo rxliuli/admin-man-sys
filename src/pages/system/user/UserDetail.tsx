@@ -1,13 +1,14 @@
 import React from 'react'
 import CommonHeader from '../../../components/header/CommonHeader'
 import { HeaderNavItem } from '../../../components/header/ts/HeaderNavItem'
-import { Card } from 'antd'
+import { Button, Card } from 'antd'
 import { UserEntity } from '../../index/ts/user.entity'
 import { userApi } from '../../index/ts/user.api'
 import { RouteComponentProps, withRouter } from 'react-router'
 import globalStyles from '../../../assets/css/global.module.css'
 import classNames from 'classnames'
 import DetailItemSimpleText from '../../../components/detail/DetailItemSimpleText'
+import { Link } from 'react-router-dom'
 
 type PropsType = RouteComponentProps<{ id: string }>
 type StateType = {
@@ -52,9 +53,20 @@ class UserDetail extends React.Component<PropsType, StateType> {
           title="用户详情"
         />
         <Card className={classNames(globalStyles.global, globalStyles.margin)}>
-          <DetailItemSimpleText label="ID" text={id} />
-          <DetailItemSimpleText label="姓名" text={name} />
-          <DetailItemSimpleText label="生日" text={birthday} />
+          <div
+            style={{
+              textAlign: 'right',
+            }}
+          >
+            <Link to={`/system/user/${this.props.match.params.id}/edit`}>
+              <Button type="primary">编辑</Button>
+            </Link>
+          </div>
+          <div>
+            <DetailItemSimpleText label="ID" text={id} />
+            <DetailItemSimpleText label="姓名" text={name} />
+            <DetailItemSimpleText label="生日" text={birthday} />
+          </div>
         </Card>
       </div>
     )

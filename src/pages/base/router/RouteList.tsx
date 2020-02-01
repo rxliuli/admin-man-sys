@@ -36,7 +36,7 @@ class RouteList extends Component<PropsType, StateType> {
         .map(permission => permission.path!),
     )
     this.setState({
-      routes: allRouteList.filter(route => pathSet.has(route.path)),
+      routes: allRouteList.filter(route => pathSet.has(route.path as string)),
     })
   }
 
