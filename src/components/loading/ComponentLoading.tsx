@@ -19,14 +19,12 @@ const ComponentLoading: React.FC<PropsType> = function(props) {
   const { isLoading, tip = '正在加载中。。。' } = props
   return (
     <div style={{ position: 'relative' }}>
-      <div
-        className={styles.componentLoadingDialog}
-        style={{
-          display: isLoading ? 'flex' : 'none',
-        }}
-      >
-        <Spin tip={tip} />
-      </div>
+      {isLoading && (
+        <div className={styles.componentLoadingDialog}>
+          <Spin tip={tip} />
+        </div>
+      )}
+
       {/*注：默认会渲染 children 组件*/}
       {props.children}
     </div>
