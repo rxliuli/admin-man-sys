@@ -1,0 +1,27 @@
+/*遮罩层*/
+.loadingOverlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 200;
+}
+
+/*显示 loading 动画的盒子*/
+.loadingBox {
+  position: absolute;
+  fill: #e41b22;
+  top: 50%;
+  left: 50%;
+  margin: -27px 0 0 -27px;
+  display: flex;
+  align-items: center;
+}
+
+.loadingMsg {
+  line-height: 32px;
+  height: 32px;
+  vertical-align: center;
+}
