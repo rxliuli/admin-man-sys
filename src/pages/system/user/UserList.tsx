@@ -1,31 +1,30 @@
-import React, { Component } from 'react'
-import { filterSelectConstant } from '../../index/FilterSelect.constant'
+import React, { useState } from 'react'
 import { Moment } from 'moment'
 import {
   FilterFieldSelect,
   FilterFieldTimeRange,
 } from '../../../components/list/ts/FilterField'
+import { filterSelectConstant } from '../../index/FilterSelect.constant'
+import { filterConstant } from '../../../components/list/ts/filterConstant'
 import { TableColumn } from '../../../components/list/ts/TableColumn'
-import { userApi } from '../../index/ts/user.api'
-import BasicList from '../../../components/list/BasicList'
 import { Link } from 'react-router-dom'
+import { userApi } from '../../index/ts/user.api'
+import BasicList, {
+  BasicListPropsType,
+} from '../../../components/list/BasicList'
+import produce from 'immer'
 
-type StateType = {
-  header: {
-    title: string
-    placeholder: string
-    list: string[]
-  }
-  params: {
-    keyword?: string
-    age?: number
-    birthdayTimeBegin?: Moment
-    birthdayTimeEnd?: Moment
-  }
-}
-
-class UserList extends Component<{}, StateType> {
-  state = {
+const UserList: React.FC = () => {
+  const [config, changeConfig] = useState<
+    BasicListPropsType & {
+      params: {
+        keyword?: string
+        age?: number
+        birthdayTimeBegin?: Moment
+        birthdayTimeEnd?: Moment
+      }
+    }
+  >({
     header: {
       title: '用户列表',
       placeholder: '用户名/住址',
@@ -43,8 +42,8 @@ class UserList extends Component<{}, StateType> {
       }),
     ],
     params: {
-      keyword: undefined,
-      age: undefined,
+      keyword: '搜索',
+      age: filterConstant.CheckAllValue,
       birthdayTimeBegin: undefined,
       birthdayTimeEnd: undefined,
     },
@@ -61,18 +60,24 @@ class UserList extends Component<{}, StateType> {
       }),
     ],
     api: userApi,
-  }
-  render() {
-    const { header, filters, columns, api } = this.state
-    return (
-      <BasicList
-        header={header}
-        filters={filters}
-        columns={columns}
-        api={api}
-      />
-    )
-  }
+  })
+  const { header, filters, columns, api, params } = config
+  return (
+    <BasicList
+      header={header}
+      filters={filters}
+      columns={columns}
+      api={api}
+      params={params}
+      onChange={params =>
+        changeConfig(
+          produce(config, draft => {
+            draft.params = params
+          }),
+        )
+      }
+    />
+  )
 }
 
 export default UserList

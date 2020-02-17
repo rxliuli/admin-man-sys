@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { TableColumn } from './ts/TableColumn'
 import { BaseListApi } from './ts/BaseListApi'
 import { Params } from './ts/Params'
@@ -8,9 +8,9 @@ import { Header } from './ts/Header'
 import ListFilter from './ListFilter'
 import { FilterFieldBase } from './ts/FilterField'
 import ListTable, { TableOperate } from './ListTable'
-import produce from 'immer'
+import { useModal } from '../hooks/useModal'
 
-type PropsType = {
+export type BasicListPropsType = {
   header: Header
   filters: FilterFieldBase[]
   columns: TableColumn[]
@@ -21,84 +21,42 @@ type PropsType = {
   tableOperate?: TableOperate
 }
 
-type StateType = {
-  innerParams: Params
-}
+const BasicList: React.FC<BasicListPropsType> = function(props) {
+  const { filters, columns, header, api, tableOptions, tableOperate } = props
 
-class BasicList extends Component<PropsType, StateType> {
-  state = {
-    innerParams: {} as Params,
-  }
-  shouldComponentUpdate(
-    nextProps: Readonly<PropsType>,
-    nextState: Readonly<StateType>,
-    nextContext: any,
-  ): boolean {
-    if (
-      JSON.stringify(this.state.innerParams) !==
-      JSON.stringify(nextState.innerParams)
-    ) {
-      this.props.onChange && this.props.onChange(nextState.innerParams)
-      return true
-    } else if (
-      JSON.stringify(this.props.params) !== JSON.stringify(nextProps.params)
-    ) {
-      this.setState({
-        innerParams: nextProps.params!,
-      })
-      return true
-    } else {
-      return false
-    }
-  }
-  changeKeyword = (val?: string) => {
-    this.setState(
-      produce(this.state, (draft: StateType) => {
-        draft.innerParams.keyword = val
-      }),
-    )
-  }
+  const [innerParams, changeParams] = useModal(
+    props.params ? props.params : {},
+    props.onChange,
+  )
 
-  render() {
-    const {
-      filters,
-      columns,
-      header,
-      api,
-      tableOptions,
-      tableOperate,
-    } = this.props
-    const { innerParams } = this.state
-    const { keyword } = innerParams
-    return (
-      <div>
-        <ListHeader {...header} value={keyword} onSearch={this.changeKeyword} />
-        {filters && filters.length > 0 ? (
-          <ListFilter
-            filters={filters}
-            value={innerParams}
-            onChange={val =>
-              this.setState(
-                produce(this.state, draft => {
-                  draft.innerParams = {
-                    ...draft.innerParams,
-                    ...val,
-                  }
-                }),
-              )
-            }
-          />
-        ) : null}
-        <ListTable
-          columns={columns}
-          api={api}
-          params={innerParams}
-          options={tableOptions}
-          tableOperate={tableOperate}
+  return (
+    <div>
+      <ListHeader
+        {...header}
+        value={innerParams.keyword}
+        onSearch={keyword => changeParams({ ...innerParams, keyword })}
+      />
+      {filters && filters.length > 0 ? (
+        <ListFilter
+          filters={filters}
+          value={innerParams}
+          onChange={val =>
+            changeParams({
+              ...innerParams,
+              ...val,
+            })
+          }
         />
-      </div>
-    )
-  }
+      ) : null}
+      <ListTable
+        columns={columns}
+        api={api}
+        params={innerParams}
+        options={tableOptions}
+        tableOperate={tableOperate}
+      />
+    </div>
+  )
 }
 
 export default BasicList

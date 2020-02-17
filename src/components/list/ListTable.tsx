@@ -59,22 +59,28 @@ class ListTable extends Component<PropsType, StateType> {
     }
   }
 
-  searchPage: () => Promise<Page<any>> = switchMap(debounce(100, async () => {
-    const { offset, size } = this.state.page
-    const data = {
-      ...this.props.params,
-      offset,
-      size,
-    }
-    logger.log('执行了搜索: ', data)
-    const page = await this.props.api.pageList(data)
-    this.setState(
-      produce(this.state, draft => {
-        draft.page.total = page.total
-        draft.page.list = page.list
-      }),
-    )
-  }) as any)
+  componentDidMount(): void {
+    this.searchPage()
+  }
+
+  searchPage: () => Promise<Page<any>> = switchMap(
+    debounce(100, async () => {
+      const { offset, size } = this.state.page
+      const data = {
+        ...this.props.params,
+        offset,
+        size,
+      }
+      logger.log('执行了搜索: ', data)
+      const page = await this.props.api.pageList(data)
+      this.setState(
+        produce(this.state, draft => {
+          draft.page.total = page.total
+          draft.page.list = page.list
+        }),
+      )
+    }) as any,
+  )
   changeCurrent = ({ current, pageSize }: PaginationConfig) => {
     this.setState(
       produce(this.state, draft => {
