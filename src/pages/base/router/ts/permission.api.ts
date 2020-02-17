@@ -26,6 +26,11 @@ class PermissionApi {
         key: 'system:user:edit:disable',
         path: '/system/user/:id/edit',
       }),
+      new RoutePermission({
+        id: autoIncrement(),
+        name: '测试 react context',
+        path: '/index/person-info',
+      }),
     ]
   }
 }

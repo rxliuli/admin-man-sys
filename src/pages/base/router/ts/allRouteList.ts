@@ -20,4 +20,8 @@ export const allRouteList: RouteProps[] = [
     path: '/system/user/:id/edit',
     component: lazy(() => import('../../../system/user/UserEdit')),
   },
+  {
+    path: '/index/person-info',
+    component: lazy(() => import('../../../index/context/HelloUseContext')),
+  },
 ]
