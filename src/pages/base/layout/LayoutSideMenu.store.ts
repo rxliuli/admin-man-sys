@@ -48,7 +48,7 @@ class LayoutSideMenuStore {
     )
   }
   @computed
-  get elPermissionSet(): Set<string> {
+  get elPermissionSet(): Pick<Set<string>, 'has'> {
     return new Set(
       this.permissionList
         .filter(permission => permission.type === PermissionType.Operate)
