@@ -48,64 +48,61 @@ const tailFormItemLayout = {
  * @param props
  * @constructor
  */
-class BasicForm extends React.Component<PropsType> {
+const BasicForm: React.FC<PropsType> = function(props) {
   /**
    * 渲染一个字段
    * @param field
    * @param key
    */
-  renderField = (field: FormFieldInput | FormFieldSelect, key: number) => {
+  const renderField = (
+    field: FormFieldInput | FormFieldSelect,
+    key: number,
+  ) => {
     switch (field.type) {
       case FormFieldType.Input:
-        return (
-          <FormItemForInput key={key} form={this.props.form} field={field} />
-        )
+        return <FormItemForInput key={key} form={props.form} field={field} />
       case FormFieldType.Select:
-        return (
-          <FormItemForSelect key={key} form={this.props.form} field={field} />
-        )
+        return <FormItemForSelect key={key} form={props.form} field={field} />
       default:
         throw new Error('无法处理的表单元素类型')
     }
   }
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         logger.error('表单校验失败: ', err)
         return
       }
-      this.props.onSubmit(values, this.props.form)
+      props.onSubmit(values, props.form)
     })
   }
-  render() {
-    return (
-      <Row>
-        <Col xs={24} sm={18}>
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            {this.props.fields.map(this.renderField)}
-            <Form.Item {...tailFormItemLayout} style={{ marginBottom: 0 }}>
+  return (
+    <Row>
+      <Col xs={24} sm={18}>
+        <Form {...formItemLayout} onSubmit={handleSubmit}>
+          {props.fields.map(renderField)}
+          <Form.Item {...tailFormItemLayout} style={{ marginBottom: 0 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginRight: 16 }}
+            >
+              提交
+            </Button>
+            {props.onCancel && (
               <Button
-                type="primary"
-                htmlType="submit"
-                style={{ marginRight: 16 }}
+                htmlType="button"
+                onClick={() => props.onCancel!(props.form)}
               >
-                提交
+                取消
               </Button>
-              {this.props.onCancel && (
-                <Button
-                  htmlType="button"
-                  onClick={() => this.props.onCancel!(this.props.form)}
-                >
-                  取消
-                </Button>
-              )}
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    )
-  }
+            )}
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
+  )
 }
 
 export default Form.create<PropsType>({

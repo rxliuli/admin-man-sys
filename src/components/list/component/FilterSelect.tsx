@@ -1,8 +1,9 @@
 import React from 'react'
-import { filterConstant } from '../ts/filterConstant'
 import FilterBase from './FilterBase'
 import { Tag } from 'antd'
+import { filterConstant } from '../ts/filterConstant'
 import { isNullOrUndefined } from 'rx-util'
+import { useComputed } from '../../hooks/useComputed'
 
 const { CheckableTag } = Tag
 
@@ -20,47 +21,55 @@ type PropsType = {
    */
   value: number
   /**
-   * 默认值，可选，默认为全选
+   * 默认值，可选，默认全选的值为 {@see filterConstant.CheckAllValue}
    */
-  defaultValue: number
+  defaultValue?: number
   onChange: (val: number) => void
 }
 
-class FilterSelect extends React.Component<PropsType> {
-  public static defaultProps = {
-    defaultValue: filterConstant.CheckAllValue,
-  }
+/**
+ * 单选选择器
+ * @param props
+ * @constructor
+ */
+const FilterSelect: React.FC<PropsType> = props => {
+  const {
+    title,
+    value,
+    values,
+    defaultValue = filterConstant.CheckAllValue,
+    onChange,
+  } = props
 
-  componentDidMount(): void {
-    if (isNullOrUndefined(this.props.value)) {
-      this.props.onChange(this.props.defaultValue)
+  const [innerValue] = useComputed(() => {
+    if (!isNullOrUndefined(props.value)) {
+      return props.value
     }
-  }
+    onChange(defaultValue)
+    return defaultValue
+  }, [props.value, props.defaultValue])
 
-  render() {
-    const { title, value, values, defaultValue, onChange } = this.props
-    return (
-      <FilterBase title={title}>
-        <div>
+  return (
+    <FilterBase title={title}>
+      <div>
+        <CheckableTag
+          checked={innerValue === defaultValue}
+          onChange={() => onChange(defaultValue)}
+        >
+          全部
+        </CheckableTag>
+        {Array.from(values.entries()).map(([val, label]) => (
           <CheckableTag
-            checked={value === defaultValue}
-            onChange={() => onChange(defaultValue)}
+            key={val}
+            checked={value === val}
+            onChange={() => onChange(val)}
           >
-            全部
+            {label}
           </CheckableTag>
-          {Array.from(values.entries()).map(([val, label]) => (
-            <CheckableTag
-              key={val}
-              checked={value === val}
-              onChange={() => onChange(val)}
-            >
-              {label}
-            </CheckableTag>
-          ))}
-        </div>
-      </FilterBase>
-    )
-  }
+        ))}
+      </div>
+    </FilterBase>
+  )
 }
 
 export default FilterSelect

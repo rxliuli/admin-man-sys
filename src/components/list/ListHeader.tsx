@@ -2,6 +2,8 @@ import React from 'react'
 import { Input } from 'antd'
 import { HeaderNavItem } from '../header/ts/HeaderNavItem'
 import CommonHeader from '../header/CommonHeader'
+import { useModal } from '../hooks/useModal'
+import { useComputed } from '../hooks/useComputed'
 
 const { Search } = Input
 
@@ -16,48 +18,21 @@ type PropsType = {
   placeholder: string
   onSearch: (keyword?: string) => void
 }
-type StateType = {
-  innerValue?: string
-}
 
-class ListHeader extends React.Component<PropsType, StateType> {
-  state = {
-    innerValue: '',
-  }
-  onChange = (e: any) => {
-    this.setState({
-      innerValue: e.target.value,
-    })
-  }
-  componentDidUpdate(prevProps: PropsType) {
-    // 典型用法（不要忘记比较 props）：
-    if (this.props.value !== prevProps.value) {
-      this.setState({
-        innerValue: this.props.value,
-      })
-    }
-  }
-
-  componentDidMount(): void {
-    this.setState({
-      innerValue: this.props.value,
-    })
-  }
-
-  render() {
-    const { list, title, placeholder, onSearch } = this.props
-    return (
-      <CommonHeader list={list} title={title}>
-        <Search
-          value={this.state.innerValue}
-          placeholder={placeholder}
-          onChange={this.onChange}
-          onSearch={onSearch}
-          enterButton
-        />
-      </CommonHeader>
-    )
-  }
+const ListHeader: React.FC<PropsType> = props => {
+  const [innerValue, changeInnerValue] = useModal(props.value)
+  const { list, title, placeholder, onSearch } = props
+  return (
+    <CommonHeader list={list} title={title}>
+      <Search
+        value={innerValue}
+        placeholder={placeholder}
+        onChange={e => changeInnerValue(e.target.value)}
+        onSearch={onSearch}
+        enterButton
+      />
+    </CommonHeader>
+  )
 }
 
 export default ListHeader
