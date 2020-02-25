@@ -4,7 +4,10 @@ import { PermissionKeyEnum } from './ts/PermissionKeyEnum'
 import { layoutSideMenuStore } from '../layout/LayoutSideMenu.store'
 
 type PropsType = PropsWithChildren<{
-  key: PermissionKeyEnum
+  /**
+   * 需要的权限
+   */
+  permission: PermissionKeyEnum
 }>
 
 /**
@@ -13,10 +16,10 @@ type PropsType = PropsWithChildren<{
  * @constructor
  */
 const PermissionBox: React.FC<PropsType> = function({
-  key,
+  permission,
   children,
 }: PropsType) {
-  return <>{layoutSideMenuStore.elPermissionSet.has(key) && children}</>
+  return <>{layoutSideMenuStore.elPermissionSet.has(permission) && children}</>
 }
 
 export default observer(PermissionBox)

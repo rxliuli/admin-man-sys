@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { Card, Table } from 'antd'
 import globalStyles from '../../assets/css/global.module.css'
 import classNames from 'classnames'
@@ -11,13 +11,14 @@ import { debounce, logger, StringValidator, switchMap } from 'rx-util'
 import produce from 'immer'
 import { PaginationConfig } from 'antd/es/pagination'
 import { TableRowSelection } from 'antd/es/table'
+import commonStyles from '../../assets/css/common.module.css'
 
 export type TableOperate = (param: {
   searchPage: () => Promise<Page<any>>
   selectedRowKeys: string[]
   page: Page<any>
   params: Params
-}) => Element
+}) => ReactNode
 
 type PropsType = {
   columns: TableColumn[]
@@ -148,7 +149,13 @@ class ListTable extends Component<PropsType, StateType> {
     return (
       <div className={classNames(globalStyles.global, globalStyles.margin)}>
         <Card>
-          <div className="flex space-between middle">
+          <div
+            className={classNames(
+              commonStyles.flex,
+              commonStyles.spaceBetween,
+              commonStyles.middle,
+            )}
+          >
             <div>
               <span> 共{page.total}条 </span>
               {innerOptions.isSelect && selectedRowKeys.length > 0 ? (

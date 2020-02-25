@@ -10,6 +10,8 @@ import classNames from 'classnames'
 import DetailItemSimpleText from '../../../components/detail/DetailItemSimpleText'
 import { Link } from 'react-router-dom'
 import ComponentLoading from '../../../components/loading/ComponentLoading'
+import PermissionBox from '../../base/router/PermissionBox'
+import { PermissionKeyEnum } from '../../base/router/ts/PermissionKeyEnum'
 
 type PropsType = RouteComponentProps<{ id: string }>
 type StateType = {
@@ -55,15 +57,17 @@ class UserDetail extends React.Component<PropsType, StateType> {
         />
         <Card className={classNames(globalStyles.global, globalStyles.margin)}>
           <ComponentLoading isLoading={id === undefined}>
-            <div
-              style={{
-                textAlign: 'right',
-              }}
-            >
-              <Link to={`/system/user/${this.props.match.params.id}/edit`}>
-                <Button type="primary">编辑</Button>
-              </Link>
-            </div>
+            <PermissionBox permission={PermissionKeyEnum.SystemUserUpdate}>
+              <div
+                style={{
+                  textAlign: 'right',
+                }}
+              >
+                <Link to={`/system/user/${this.props.match.params.id}/edit`}>
+                  <Button type="primary">编辑</Button>
+                </Link>
+              </div>
+            </PermissionBox>
             <div>
               <DetailItemSimpleText label="ID" text={id} />
               <DetailItemSimpleText label="姓名" text={name} />

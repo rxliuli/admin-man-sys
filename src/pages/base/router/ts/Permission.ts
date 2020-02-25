@@ -1,6 +1,8 @@
 /**
  * 权限类型
  */
+import { PermissionKeyEnum } from './PermissionKeyEnum'
+
 export enum PermissionType {
   Route,
   Operate,
@@ -31,7 +33,7 @@ export class RoutePermission extends BasePermission<PermissionType.Route> {
  * 操作级权限
  */
 export class OperatePermission extends BasePermission<PermissionType.Operate> {
-  key: string
+  key: PermissionKeyEnum
   /**
    * 如果按钮关联到路由有值
    */
