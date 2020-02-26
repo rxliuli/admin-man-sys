@@ -12,7 +12,6 @@ import { userApi } from '../../index/ts/user.api'
 import BasicList, {
   BasicListPropsType,
 } from '../../../components/list/BasicList'
-import produce from 'immer'
 import { PermissionKeyEnum } from '../../base/router/ts/PermissionKeyEnum'
 import {
   dealPermissionForArray,
@@ -29,7 +28,7 @@ type Config = BasicListPropsType & {
   }
 }
 const UserList: React.FC = () => {
-  const [config, changeConfig] = useState<Config>(
+  const [config] = useState<Config>(
     dealPermissionForObject(
       {
         header: {

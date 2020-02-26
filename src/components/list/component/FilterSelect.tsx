@@ -3,7 +3,7 @@ import FilterBase from './FilterBase'
 import { Tag } from 'antd'
 import { filterConstant } from '../ts/filterConstant'
 import { isNullOrUndefined } from 'rx-util'
-import { useComputed } from '../../hooks/useComputed'
+import { useComputed } from '../../../common/hooks/useComputed'
 
 const { CheckableTag } = Tag
 

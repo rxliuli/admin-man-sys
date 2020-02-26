@@ -77,7 +77,6 @@ const REditable: React.FC<PropsType> = function(props) {
   return (
     <RCard>
       <header>
-        <Button icon="left">返回</Button>
         <PermissionBox
           permission={
             timing !== -1

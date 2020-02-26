@@ -2,7 +2,7 @@ import React from 'react'
 import moment, { Moment } from 'moment'
 import { DatePicker } from 'antd'
 import FilterBase from './FilterBase'
-import { useComputed } from '../../hooks/useComputed'
+import { useComputed } from '../../../common/hooks/useComputed'
 
 const { RangePicker } = DatePicker
 

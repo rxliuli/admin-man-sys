@@ -2,15 +2,10 @@ import React from 'react'
 import { Input } from 'antd'
 import { HeaderNavItem } from '../header/ts/HeaderNavItem'
 import CommonHeader from '../header/CommonHeader'
-import { useModal } from '../hooks/useModal'
-import { useComputed } from '../hooks/useComputed'
+import { useModal } from '../../common/hooks/useModal'
 
 const { Search } = Input
 
-type ReactInput = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->
 type PropsType = {
   value?: string
   list: (string | HeaderNavItem)[]

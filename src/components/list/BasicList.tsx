@@ -8,7 +8,7 @@ import { Header } from './ts/Header'
 import ListFilter from './ListFilter'
 import { FilterFieldBase } from './ts/FilterField'
 import ListTable, { TableOperate } from './ListTable'
-import { useModal } from '../hooks/useModal'
+import { useModal } from '../../common/hooks/useModal'
 
 export type BasicListPropsType = {
   header: Header

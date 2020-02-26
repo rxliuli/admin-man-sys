@@ -13,7 +13,7 @@ import {
 } from './ts/FilterField'
 import FilterBase from './component/FilterBase'
 import produce from 'immer'
-import { useModal } from '../hooks/useModal'
+import { useModal } from '../../common/hooks/useModal'
 
 type PropsType = {
   value: any
