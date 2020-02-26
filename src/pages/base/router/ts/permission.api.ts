@@ -1,26 +1,23 @@
 import { OperatePermission, RoutePermission } from './Permission'
 import { autoIncrement } from 'rx-util'
-import { allRouteList } from './allRouteList'
 import { PermissionKeyEnum } from './PermissionKeyEnum'
 
 class PermissionApi {
   async list(): Promise<(RoutePermission | OperatePermission)[]> {
-    const operatePermissionList = [
-      new OperatePermission({
-        id: autoIncrement(),
-        name: '查看用户详情',
-        description: '',
-        key: PermissionKeyEnum.SystemUserDetail,
-        path: '/system/user/:id',
-      }),
-      // new OperatePermission({
-      //   id: autoIncrement(),
-      //   name: '修改用户详情',
-      //   description: '',
-      //   key: PermissionKeyEnum.SystemUserUpdate,
-      //   path: '/system/user/:id/edit',
-      // }),
-    ] as OperatePermission[]
+    const operatePermissionList = ([
+      [PermissionKeyEnum.SystemUserDetail, '/system/user/:id'],
+      [PermissionKeyEnum.SystemUserUpdate, '/system/user/:id/edit'],
+      [PermissionKeyEnum.ViewMarkNormal],
+    ] as [PermissionKeyEnum, string][]).map(
+      ([key, path]) =>
+        new OperatePermission({
+          id: autoIncrement(),
+          name: path,
+          description: '',
+          key,
+          path,
+        }),
+    )
     return [
       ...[
         '/system/task/list',
@@ -28,6 +25,7 @@ class PermissionApi {
         '/system/user/:id',
         '/index/person-info',
         '/index/worker',
+        '/index/permission',
       ].map(
         path =>
           new RoutePermission({

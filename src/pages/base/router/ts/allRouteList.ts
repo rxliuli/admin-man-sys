@@ -28,4 +28,8 @@ export const allRouteList: RouteProps[] = [
     path: '/index/worker',
     component: lazy(() => import('../../../index/worker/HelloUseWebWorker')),
   },
+  {
+    path: '/index/permission',
+    component: lazy(() => import('../../../index/permission/REditable')),
+  },
 ]
