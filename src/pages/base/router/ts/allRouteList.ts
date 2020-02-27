@@ -30,6 +30,6 @@ export const allRouteList: RouteProps[] = [
   },
   {
     path: '/index/permission',
-    component: lazy(() => import('../../../index/permission/REditable')),
+    component: lazy(() => import('../../../index/permission/REditableWrapper')),
   },
 ]
