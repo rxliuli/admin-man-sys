@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 
 /**
  * 模仿 vue 中的 computed
@@ -9,7 +9,13 @@ export function useComputed<T>(
   computed: () => T,
   deps: any[] = [],
 ): [T, (val: T) => void] {
-  const [val, change] = useState<T>(computed)
+  const [val, change] = useReducer(
+    (state: T, val: T) => {
+      return val
+    },
+    computed(),
+    v => v,
+  )
   useEffect(() => {
     change(computed())
     // eslint-disable-next-line
