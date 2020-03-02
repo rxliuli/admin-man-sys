@@ -1,13 +1,21 @@
 import React from 'react'
 import { Spin } from 'antd'
 import styles from './ComponentLoading.module.css'
+import { BackgroundColorProperty } from 'csstype'
 
 type PropsType = {
   /**
    * 是否显示 loading?
    */
   isLoading: boolean
+  /**
+   * 显示 Loading 旁边的提示文字
+   */
   tip?: string
+  /**
+   * 显示 Loading 的背景颜色
+   */
+  bc?: BackgroundColorProperty
 }
 
 /**
@@ -16,11 +24,16 @@ type PropsType = {
  * @constructor
  */
 const ComponentLoading: React.FC<PropsType> = function(props) {
-  const { isLoading, tip = '正在加载中。。。' } = props
+  const { isLoading, tip = '正在加载中。。。', bc = '#ffffff' } = props
   return (
     <div style={{ position: 'relative' }}>
       {isLoading && (
-        <div className={styles.componentLoadingDialog}>
+        <div
+          className={styles.componentLoadingDialog}
+          style={{
+            backgroundColor: bc,
+          }}
+        >
           <Spin tip={tip} />
         </div>
       )}
