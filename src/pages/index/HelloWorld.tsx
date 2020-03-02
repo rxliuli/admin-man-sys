@@ -3,13 +3,13 @@ import withOrderComponent, {
   withOrderComponentPropsType,
 } from './withOrderComponent'
 import NotWithOrderComponent from './NotWithOrderComponent'
-import HelloHooks from './HelloHooks'
+import HelloHooksEffect from './hooks/HelloHooksEffect'
 
 function HelloWorld(props: withOrderComponentPropsType) {
   return (
     <div className="hello-world">
       {props.hello}
-      <HelloHooks />
+      <HelloHooksEffect />
     </div>
   )
 }

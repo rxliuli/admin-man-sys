@@ -8,7 +8,7 @@ import { Header } from './ts/Header'
 import ListFilter from './ListFilter'
 import { FilterFieldBase } from './ts/FilterField'
 import ListTable, { TableOperate } from './ListTable'
-import { useModal } from '../../common/hooks/useModal'
+import { useModel } from '../../common/hooks/useModel'
 
 export type BasicListPropsType = {
   header: Header
@@ -24,7 +24,7 @@ export type BasicListPropsType = {
 const BasicList: React.FC<BasicListPropsType> = function(props) {
   const { filters, columns, header, api, tableOptions, tableOperate } = props
 
-  const [innerParams, changeParams] = useModal(
+  const [innerParams, changeParams] = useModel(
     props.params ? props.params : {},
     props.onChange,
   )

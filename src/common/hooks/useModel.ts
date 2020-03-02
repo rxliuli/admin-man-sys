@@ -6,7 +6,7 @@ import { useWatch } from './useWatch'
  * @param prop 需要绑定的 prop
  * @param onChange 修改 prop 的函数
  */
-export function useModal<T>(
+export function useModel<T>(
   prop: T,
   onChange?: (val: T) => void,
 ): [T, (value: T) => void] {

@@ -13,7 +13,7 @@ import {
 } from './ts/FilterField'
 import FilterBase from './component/FilterBase'
 import produce from 'immer'
-import { useModal } from '../../common/hooks/useModal'
+import { useModel } from '../../common/hooks/useModel'
 
 type PropsType = {
   value: any
@@ -22,7 +22,7 @@ type PropsType = {
 }
 
 const ListFilter: React.FC<PropsType> = props => {
-  const [innerValue, changeInnerValue] = useModal(props.value, props.onChange)
+  const [innerValue, changeInnerValue] = useModel(props.value, props.onChange)
   return (
     <div className={classNames(globalStyles.global, globalStyles.margin)}>
       <Card>

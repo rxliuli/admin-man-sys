@@ -2,7 +2,7 @@ import React from 'react'
 import { Input } from 'antd'
 import { HeaderNavItem } from '../header/ts/HeaderNavItem'
 import CommonHeader from '../header/CommonHeader'
-import { useModal } from '../../common/hooks/useModal'
+import { useModel } from '../../common/hooks/useModel'
 
 const { Search } = Input
 
@@ -15,7 +15,7 @@ type PropsType = {
 }
 
 const ListHeader: React.FC<PropsType> = props => {
-  const [innerValue, changeInnerValue] = useModal(props.value)
+  const [innerValue, changeInnerValue] = useModel(props.value)
   const { list, title, placeholder, onSearch } = props
   return (
     <CommonHeader list={list} title={title}>
