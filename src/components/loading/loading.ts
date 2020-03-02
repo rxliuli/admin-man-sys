@@ -1,41 +1,36 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { wait } from 'rx-util'
 import __MessageLoadingForFunc, { Handlers } from './__MessageLoadingForFunc'
 
 let handlers: Handlers | null = null
 let id = 0
 let loadingIdSet = new Set<number>()
 
+const el = React.createElement(__MessageLoadingForFunc, {
+  init(_handlers) {
+    handlers = _handlers
+  },
+})
+const $div = document.createElement('div')
+document.body.appendChild($div)
+ReactDOM.render(el, $div)
+
 /**
  * 显示一个 loading 动画
  * @private
  */
-function _loading() {
+function _loading(msg = '加载中...') {
   const identity = id++
-  function show() {
-    loadingIdSet.add(identity)
-    handlers?.changeVisible(true)
-  }
-  if (handlers === null) {
-    const el = React.createElement(__MessageLoadingForFunc, {
-      init(_handlers) {
-        handlers = _handlers
-      },
-    })
-    const $div = document.createElement('div')
-    document.body.appendChild($div)
-    ReactDOM.render(el, $div, async () => {
-      await wait(() => handlers !== null)
-      show()
-    })
-  } else {
-    show()
-  }
+  loadingIdSet.add(identity)
+  console.log('loading: ', Array.from(loadingIdSet))
+  handlers!.changeVisible(true)
+  handlers!.changeMsg(msg)
+
   return function hide() {
     loadingIdSet.delete(identity)
+    console.log('hide: ', Array.from(loadingIdSet))
     if (loadingIdSet.size === 0) {
-      handlers?.changeVisible(false)
+      handlers!.changeVisible(false)
     }
   }
 }
@@ -49,6 +44,15 @@ export const loading = Object.assign(_loading, {
    * @param msg 附加的消息
    */
   config({ msg }: { msg: string }) {
-    handlers?.changeMsg(msg)
+    if (handlers && handlers.changeMsg) {
+      handlers.changeMsg(msg)
+    }
+  },
+  /**
+   * 销毁所有的 loading 框
+   */
+  destory() {
+    loadingIdSet.clear()
+    handlers!.changeVisible(false)
   },
 })
