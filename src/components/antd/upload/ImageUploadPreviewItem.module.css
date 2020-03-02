@@ -1,0 +1,47 @@
+.imageUploadPreviewItem {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  border: solid 1px rgba(0, 0, 0, 0.15);
+  margin-right: 12px;
+  margin-bottom: 12px;
+  border-radius: 2px;
+}
+
+.img {
+  height: 80px;
+  width: 80px;
+  margin: 8px;
+}
+
+/*region 图标组容器*/
+
+.icons {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.icons * {
+  color: transparent;
+  font-size: 16px;
+  transition: color 0.3s;
+  margin: auto 2px;
+}
+.imageUploadPreviewItem:hover .icons {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.imageUploadPreviewItem:hover .icons * {
+  color: #fff;
+}
+
+/*endregion*/

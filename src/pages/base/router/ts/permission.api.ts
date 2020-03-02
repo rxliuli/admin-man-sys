@@ -26,6 +26,7 @@ class PermissionApi {
         '/index/person-info',
         '/index/worker',
         '/index/permission',
+        '/test/upload',
       ].map(
         path =>
           new RoutePermission({

@@ -32,4 +32,10 @@ export const allRouteList: RouteProps[] = [
     path: '/index/permission',
     component: lazy(() => import('../../../index/permission/REditableWrapper')),
   },
+  {
+    path: '/test/upload',
+    component: lazy(() =>
+      import('../../../../components/antd/upload/ImageUpload.test'),
+    ),
+  },
 ]
