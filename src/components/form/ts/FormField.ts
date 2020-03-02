@@ -3,6 +3,8 @@ import { ValidationRule } from 'antd/es/form/Form'
 export enum FormFieldType {
   Input,
   Select,
+  Date,
+  DateRange,
 }
 
 /**
@@ -22,18 +24,19 @@ export interface FormFieldState {
 /**
  * 基本输入框
  */
-export interface FormFieldBase<Type extends FormFieldType>
-  extends FormFieldState {
-  type: Type
+export interface FormFieldBase extends FormFieldState {
+  type: FormFieldType
   label: string
   field: string
+  initialValue?: any
   rules?: ValidationRule[]
 }
 
 /**
  * 文本输入框
  */
-export interface FormFieldInput extends FormFieldBase<FormFieldType.Input> {
+export interface FormFieldInput extends FormFieldBase {
+  type: FormFieldType.Input
   placeholder?: string
 }
 
@@ -48,8 +51,25 @@ export interface SelectOption {
 /**
  * 下拉选择框
  */
-export interface FormFieldSelect extends FormFieldBase<FormFieldType.Select> {
+export interface FormFieldSelect extends FormFieldBase {
+  type: FormFieldType.Select
   placeholder?: string
   mode?: 'multiple' | 'tags'
   options?: SelectOption[]
+}
+
+/**
+ * 日期选择框
+ */
+export interface FormFieldDate extends FormFieldBase {
+  type: FormFieldType.Date
+  placeholder?: string
+}
+
+/**
+ * 日期区间选择框
+ */
+export interface FormFieldDateRange extends FormFieldBase {
+  type: FormFieldType.DateRange
+  placeholder?: [string, string]
 }

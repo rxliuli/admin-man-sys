@@ -1,9 +1,11 @@
-import { BaseListApi } from '../../../components/list/ts/BaseListApi'
 import { mock } from 'mockjs'
-import { Page } from '../../../components/list/ts/Page'
-import { Params } from '../../../components/list/ts/Params'
 import { UserEntity } from './user.entity'
 import { wait } from 'rx-util'
+import { BaseListApi } from '../../../../components/list/ts/BaseListApi'
+import { Params } from '../../../../components/list/ts/Params'
+import { Page } from '../../../../components/list/ts/Page'
+import { PartialField } from '../../../../common/interface/PartialField'
+import { Prettify } from '../../../../common/interface/Prettify'
 
 const mockUserTemplate = {
   'id|+1': 0,
@@ -22,9 +24,14 @@ class UserApi implements BaseListApi {
       list,
     }
   }
-  async get(id: number) {
+  async get(id: number): Promise<UserEntity> {
     await wait(1000)
     return mock(mockUserTemplate)
+  }
+
+  async update(user: Prettify<PartialField<UserEntity, 'id'>>) {
+    await wait(1000)
+    return true
   }
 }
 

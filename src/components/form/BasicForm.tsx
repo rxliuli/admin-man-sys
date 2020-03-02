@@ -1,14 +1,13 @@
 import React, { FormEvent } from 'react'
-import { FormFieldInput, FormFieldSelect, FormFieldType } from './ts/FormField'
+import { FormFieldBase } from './ts/FormField'
 import { Button, Col, Form, Row } from 'antd'
-import FormItemForInput from './component/FormItemForInput'
 import { FormComponentProps } from 'antd/es/form'
-import FormItemForSelect from './component/FormItemForSelect'
 import { logger } from 'rx-util'
 import { WrappedFormUtils } from 'antd/es/form/Form'
+import FormItemForBasic from './component/FormItemForBasic'
 
 type PropsType = FormComponentProps & {
-  fields: (FormFieldInput | FormFieldSelect)[]
+  fields: FormFieldBase[]
   onSubmit: (values: any, form: WrappedFormUtils) => void
   onCancel?: (form: WrappedFormUtils) => void
 }
@@ -49,24 +48,6 @@ const tailFormItemLayout = {
  * @constructor
  */
 const BasicForm: React.FC<PropsType> = function(props) {
-  /**
-   * 渲染一个字段
-   * @param field
-   * @param key
-   */
-  const renderField = (
-    field: FormFieldInput | FormFieldSelect,
-    key: number,
-  ) => {
-    switch (field.type) {
-      case FormFieldType.Input:
-        return <FormItemForInput key={key} form={props.form} field={field} />
-      case FormFieldType.Select:
-        return <FormItemForSelect key={key} form={props.form} field={field} />
-      default:
-        throw new Error('无法处理的表单元素类型')
-    }
-  }
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     props.form.validateFieldsAndScroll((err, values) => {
@@ -81,7 +62,11 @@ const BasicForm: React.FC<PropsType> = function(props) {
     <Row>
       <Col xs={24} sm={18}>
         <Form {...formItemLayout} onSubmit={handleSubmit}>
-          {props.fields.map(renderField)}
+          {props.fields
+            .filter(field => !field.hidden)
+            .map((field, i) => (
+              <FormItemForBasic form={props.form} field={field} key={i} />
+            ))}
           <Form.Item {...tailFormItemLayout} style={{ marginBottom: 0 }}>
             <Button
               type="primary"
@@ -105,6 +90,4 @@ const BasicForm: React.FC<PropsType> = function(props) {
   )
 }
 
-export default Form.create<PropsType>({
-  name: 'BasicForm',
-})(BasicForm)
+export default BasicForm

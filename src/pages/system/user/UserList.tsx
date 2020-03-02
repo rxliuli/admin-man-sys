@@ -8,7 +8,6 @@ import { filterSelectConstant } from '../../index/FilterSelect.constant'
 import { filterConstant } from '../../../components/list/ts/filterConstant'
 import { TableColumn } from '../../../components/list/ts/TableColumn'
 import { Link } from 'react-router-dom'
-import { userApi } from '../../index/ts/user.api'
 import BasicList, {
   BasicListPropsType,
 } from '../../../components/list/BasicList'
@@ -18,6 +17,7 @@ import {
   dealPermissionForObject,
 } from '../../base/router/ts/hasPermission'
 import { Button } from 'antd'
+import { userApi } from './api/user.api'
 
 type Config = BasicListPropsType & {
   params: {

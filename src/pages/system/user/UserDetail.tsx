@@ -2,8 +2,6 @@ import React from 'react'
 import CommonHeader from '../../../components/header/CommonHeader'
 import { HeaderNavItem } from '../../../components/header/ts/HeaderNavItem'
 import { Button, Card } from 'antd'
-import { UserEntity } from '../../index/ts/user.entity'
-import { userApi } from '../../index/ts/user.api'
 import { RouteComponentProps, withRouter } from 'react-router'
 import globalStyles from '../../../assets/css/global.module.css'
 import classNames from 'classnames'
@@ -12,6 +10,8 @@ import { Link } from 'react-router-dom'
 import ComponentLoading from '../../../components/loading/ComponentLoading'
 import PermissionBox from '../../base/router/PermissionBox'
 import { PermissionKeyEnum } from '../../base/router/ts/PermissionKeyEnum'
+import { userApi } from './api/user.api'
+import { UserEntity } from './api/user.entity'
 
 type PropsType = RouteComponentProps<{ id: string }>
 type StateType = {
