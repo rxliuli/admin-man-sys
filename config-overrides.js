@@ -1,8 +1,10 @@
+const WorkerPlugin = require('worker-plugin')
+
 module.exports = {
   webpack: function(config, env) {
     //region web-worker
 
-    config.output.globalObject = 'this'
+    config.plugins.push(new WorkerPlugin())
 
     //endregion
 

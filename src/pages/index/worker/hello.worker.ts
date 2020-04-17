@@ -1,6 +1,12 @@
-import registerPromiseWorker from 'promise-worker/register'
+import { expose } from 'comlink'
+import { HelloWorkerType } from './hello.worker.type'
 
-//注册监听消息
-registerPromiseWorker(function(message) {
-  return Math.random().toString()
-})
+const obj: HelloWorkerType = {
+  name: 'liuli',
+  hello(name: string) {
+    console.log(`hello, ${name || this.name}`)
+  },
+}
+
+expose(obj)
+
