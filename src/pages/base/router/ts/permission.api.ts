@@ -27,6 +27,7 @@ class PermissionApi {
         '/index/worker',
         '/index/permission',
         '/test/upload',
+        '/dev/hooks/useComputed',
       ].map(
         path =>
           new RoutePermission({

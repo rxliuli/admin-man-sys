@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import FilterBase from './FilterBase'
 import { Tag } from 'antd'
 import { filterConstant } from '../ts/filterConstant'
 import { isNullOrUndefined } from 'rx-util'
-import { useComputed } from '../../../common/hooks/useComputed'
 
 const { CheckableTag } = Tag
 
@@ -41,7 +40,7 @@ const FilterSelect: React.FC<PropsType> = props => {
     onChange,
   } = props
 
-  const [innerValue] = useComputed(() => {
+  const innerValue = useMemo(() => {
     if (!isNullOrUndefined(props.value)) {
       return props.value
     }

@@ -38,4 +38,10 @@ export const allRouteList: RouteProps[] = [
       import('../../../../components/antd/upload/ImageUpload.test'),
     ),
   },
+  {
+    path: '/dev/hooks/useComputed',
+    component: lazy(() =>
+      import('../../../../common/hooks/test/UseComputed.demo'),
+    ),
+  },
 ]

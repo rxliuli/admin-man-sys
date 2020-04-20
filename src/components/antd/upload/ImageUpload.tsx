@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Modal } from 'antd/es'
 import ImageUploadPreviewItem from './ImageUploadPreviewItem'
-import { useComputed } from '../../../common/hooks/useComputed'
 import UploadButton from './UploadButton'
 import ImageUploadButton from './ImageUploadButton'
-import { groupBy, returnItself } from 'rx-util'
+import { groupBy } from 'rx-util'
 
 type PropsType<T extends string[] | (string | null)> = {
   /**
@@ -64,7 +63,7 @@ const ImageUpload: React.FC<PropsType<any>> = function(props) {
     onChange(_value)
   }
 
-  const [_value] = useComputed<string[]>(() => {
+  const _value = useMemo<string[]>(() => {
     if (multiple) {
       if (!value) {
         onChange([])
@@ -81,12 +80,9 @@ const ImageUpload: React.FC<PropsType<any>> = function(props) {
     () => 0,
   )
   //TODO 此处应该是存在什么问题，计算属性会慢一步
-  const [valueCountMap2] = useComputed(() => groupBy(_value, v => v), [_value])
+  const valueCountMap2 = useMemo(() => groupBy(_value, v => v), [_value])
   console.log('valueCountMap2: ', valueCountMap.size, valueCountMap2.size)
-  const [_max] = useComputed<number>(() => (multiple ? max : 1), [
-    multiple,
-    max,
-  ])
+  const _max = useMemo<number>(() => (multiple ? max : 1), [multiple, max])
 
   return (
     <div>

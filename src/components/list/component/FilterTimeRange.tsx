@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { DatePicker } from 'antd'
 import FilterBase from './FilterBase'
-import { useComputed } from '../../../common/hooks/useComputed'
 
 const { RangePicker } = DatePicker
 
@@ -24,7 +23,7 @@ type PropsType = {
  * @constructor
  */
 const FilterTimeRange: React.FC<PropsType> = props => {
-  const [innerValue] = useComputed(() => {
+  const innerValue = useMemo(() => {
     const res = (props.value || []).map(val => val && moment(val)) as [
       Moment,
       Moment,
