@@ -29,7 +29,7 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-      "@typescript-eslint/no-unused-vars": false
+      "@typescript-eslint/no-unused-vars": "off"
     }
   },
   "browserslist": {
@@ -61,6 +61,7 @@
     "mockjs": "^1.1.0",
     "prettier": "^1.19.1",
     "react-app-rewired": "^2.1.5",
+    "react-perf-devtool": "^3.1.8",
     "react-test-renderer": "^16.13.1",
     "worker-plugin": "^4.0.2"
   }
