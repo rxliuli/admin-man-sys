@@ -32,21 +32,14 @@ type PropsType = {
  * @constructor
  */
 const FilterSelect: React.FC<PropsType> = props => {
-  const {
-    title,
-    value,
-    values,
-    defaultValue = filterConstant.CheckAllValue,
-    onChange,
-  } = props
+  const { title, value, values, defaultValue, onChange } = props as Required<
+    PropsType
+  >
 
-  const innerValue = useMemo(() => {
-    if (!isNullOrUndefined(props.value)) {
-      return props.value
-    }
-    onChange(defaultValue)
-    return defaultValue
-  }, [props.value, props.defaultValue])
+  const innerValue = useMemo(
+    () => (isNullOrUndefined(value) ? defaultValue : value),
+    [value, defaultValue],
+  )
 
   return (
     <FilterBase title={title}>
@@ -69,6 +62,10 @@ const FilterSelect: React.FC<PropsType> = props => {
       </div>
     </FilterBase>
   )
+}
+
+FilterSelect.defaultProps = {
+  defaultValue: filterConstant.CheckAllValue,
 }
 
 export default FilterSelect

@@ -23,14 +23,11 @@ type PropsType = {
  * @constructor
  */
 const FilterTimeRange: React.FC<PropsType> = props => {
-  const innerValue = useMemo(() => {
-    const res = (props.value || []).map(val => val && moment(val)) as [
-      Moment,
-      Moment,
-    ]
-    props.onChange && props.onChange(res)
-    return res
-  }, [props.value])
+  const innerValue = useMemo(
+    () =>
+      (props.value || []).map(val => val && moment(val)) as [Moment, Moment],
+    [props.value],
+  )
   return (
     <FilterBase title={props.title}>
       <RangePicker

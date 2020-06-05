@@ -10,5 +10,5 @@ export function useDidMount(
         res()
       }
     }
-  }, [func])
+  }, [])
 }
